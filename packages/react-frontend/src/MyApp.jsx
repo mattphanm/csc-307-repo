@@ -1,5 +1,5 @@
 import Table from "./Table";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Form from "./Form";
 
 function MyApp() {
@@ -10,6 +10,12 @@ function fetchUsers() {
     return promise;
 }
 
+useEffect(() => {
+  fetchUsers()
+	  .then((res) => res.json())
+	  .then((json) => setCharacters(json["users_list"]))
+	  .catch((error) => { console.log(error); });
+}, [] );
 
 function removeOneCharacter(index) {
 	const updated = characters.filter((character, i) => {
