@@ -11,15 +11,20 @@ function fetchUsers() {
 }
 
 function postUser(person) {
-    const promise = fetch("Http://localhost:8000/users", {
+    return fetch("http://localhost:8000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(person),
-    });
-
-    return promise;
+    }).then(async (res) => {
+    console.log("Post Status =", res.status);
+    if (res.status !== 201) {
+      const msg = await res.text().catch(() => "");
+      throw new Error(`Expected 201, got ${res.status}. ${msg}`);
+    }
+    return res.json();
+  });
 }
 
 useEffect(() => {
@@ -29,19 +34,29 @@ useEffect(() => {
 	  .catch((error) => { console.log(error); });
 }, [] );
 
-function removeOneCharacter(index) {
-	const updated = characters.filter((character, i) => {
-		return i !== index;
-	});
-	setCharacters(updated);
+function removeOneCharacter(id) {
+    fetch(`http://localhost:8000/users/${id}`, { method: "DELETE" })
+    .then(async (res) => {
+      if (res.status !== 204) {
+        const msg = await res.text().catch(() => "");
+        throw new Error(`Expected 204, got ${res.status}. ${msg}`);
+      }
+    
+      setCharacters((prev) => prev.filter((c) => c.id !== id));
+    })
+    .catch((err) => {
+      console.error("DELETE failed:", err);
+      
+    });
 }
 
 function updateList(person) { 
     postUser(person)
-      .then(() => setCharacters([...characters, person]))
+      .then((created) => { setCharacters((prev) => [...prev, created]); })
       .catch((error) => {
         console.log(error);
-      })
+      alert("Create failed; table not updated.");
+	})
 }
 
 return (
