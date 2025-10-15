@@ -42,7 +42,7 @@ function removeOneCharacter(id) {
         throw new Error(`Expected 204, got ${res.status}. ${msg}`);
       }
     
-      setCharacters((prev) => prev.filter((c) => c.id !== id));
+      setCharacters((prev) => prev.filter((c) => c._id !== id));
     })
     .catch((err) => {
       console.error("DELETE failed:", err);
