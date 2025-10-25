@@ -1,0 +1,12 @@
+{
+  "name": "jest-unit-testing",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "module.js",
+  "scripts": {
+    "test": "npx jest"
+  }
+}
