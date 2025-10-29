@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-     "dev": "npm -w react-frontend run dev",
-     "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm -w react-frontend run dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "workspaces": ["packages/*"]
-
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "jest": "^30.2.0"
+  }
 }
